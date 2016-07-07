@@ -505,6 +505,9 @@ class Twython(EndpointsMixin, object):
                         else:
                             since_id = content[0]['id_str']
                         params['since_id'] = (int(since_id) - 1)
+                    else:
+                        max_id = content[-1]['id_str']
+                        params['max_id'] = int(max_id) - 1
                 elif function.iter_mode == 'cursor':
                     params['cursor'] = content['next_cursor_str']
             except (TypeError, ValueError):  # pragma: no cover
