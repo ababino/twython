@@ -23,7 +23,7 @@ from .compat import urlsplit
 from .endpoints import EndpointsMixin
 from .exceptions import TwythonError, TwythonAuthError, TwythonRateLimitError
 from .helpers import _transparent_params
-
+import logging
 warnings.simplefilter('always', TwythonDeprecationWarning)  # For Python 2.7 >
 
 
@@ -507,6 +507,13 @@ class Twython(EndpointsMixin, object):
                             new_params = dict(parse_qsl(next_results.query))
                             for key, val in new_params.iteritems():
                                 params[key] = val
+                        elif hasattr(function, 'iter_key'):
+                            if len(content[function.iter_key])>0:
+                                # No more results or a problem with pages
+                                params['max_id'] = str(int(content[function.iter_key][-1]['id_str']) - 1)
+                            else:
+                            # No more results
+                            raise StopIteration
                         else:
                             # No more results
                             raise StopIteration
