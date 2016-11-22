@@ -512,8 +512,8 @@ class Twython(EndpointsMixin, object):
                                 # No more results or a problem with pages
                                 params['max_id'] = str(int(content[function.iter_key][-1]['id_str']) - 1)
                             else:
-                            # No more results
-                            raise StopIteration
+                                # No more results
+                                raise StopIteration
                         else:
                             # No more results
                             raise StopIteration
