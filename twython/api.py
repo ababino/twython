@@ -505,7 +505,7 @@ class Twython(EndpointsMixin, object):
                         if 'next_results' in metadata:
                             next_results = urlsplit(metadata['next_results'])
                             new_params = dict(parse_qsl(next_results.query))
-                            for key, val in new_params.iteritems():
+                            for key, val in new_params.items():
                                 params[key] = val
                         elif hasattr(function, 'iter_key'):
                             if len(content[function.iter_key])>0:
